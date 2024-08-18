@@ -28,12 +28,11 @@ jobs:
 
       - name: Run Tests
         run: |
-          docker compose up -d
-          docker compose exec -T app sh -c "python manage.py test"
+          docker compose run --rm app sh -c "python manage.py test"
 
       - name: Run Linting
         id: lint
-        run: docker compose exec -T app sh -c "flake8"
+        run: docker compose run --rm app sh -c "flake8"
 
-      # - name: Shut down services
-      #   run: docker compose down
+      - name: Shut down services
+        run: docker compose down
