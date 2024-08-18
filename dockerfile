@@ -7,6 +7,9 @@ ENV PYTHONUNBUFFERED=1
 # Set the working directory in the container
 WORKDIR /app
 
+# Add the build argument for development
+ARG DEV=false
+
 # Copy the requirements files into the container
 COPY requirements.txt requirements.dev.txt /tmp/
 
@@ -16,6 +19,7 @@ RUN python -m venv /py && \
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ "$DEV" = "true" ]; then \
         /py/bin/pip install -r /tmp/requirements.dev.txt; \
+        /py/bin/flake8 --version; \
     fi && \
     rm -rf /tmp
 
